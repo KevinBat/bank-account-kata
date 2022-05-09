@@ -1,17 +1,43 @@
 package com.bankaccount.kata.domain.client;
 
+import com.bankaccount.kata.domain.account.Account;
+import com.bankaccount.kata.domain.account.AccountRepository;
+import com.bankaccount.kata.domain.operation.Operation;
+import com.bankaccount.kata.domain.operation.OperationService;
+
+import java.math.BigDecimal;
+import java.util.List;
+
 public class ClientService {
 
-    public void clientMakeDeposit(long clientId, long accountNumber, int amount) {
+    private final AccountRepository accountRepository;
+    private final OperationService operationService;
 
+    public ClientService(AccountRepository accountRepository, OperationService operationService) {
+        this.accountRepository = accountRepository;
+        this.operationService = operationService;
     }
 
-    public void clientMakeWithdrawal(long clientId, long accountNumber, int amount) {
+    public void clientMakeDeposit(long accountNumber, double amount) {
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(IllegalArgumentException::new);
+        account.makeDeposit(BigDecimal.valueOf(amount));
+        accountRepository.save(account);
 
+        operationService.createDepositOperation(accountNumber, amount, account.getBalance().doubleValue());
     }
 
-    public void clientSeeHistory(long clientId, long accountNumber) {
+    public void clientMakeWithdrawal(long accountNumber, double amount) {
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(IllegalArgumentException::new);
+        account.makeWithdrawal(BigDecimal.valueOf(amount));
+        accountRepository.save(account);
 
+        operationService.createWithdrawalOperation(accountNumber, amount, account.getBalance().doubleValue());
+    }
+
+    public List<Operation> clientSeeHistory(long accountNumber) {
+        return operationService.findOperationsByAccountNumber(accountNumber);
     }
 
 }

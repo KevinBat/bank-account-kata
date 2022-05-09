@@ -56,7 +56,7 @@ class AccountTest {
     }
 
     @Test
-    void giventooBigAmount_whenWithdrawal_ThenThrowIllegal() {
+    void givenTooBigAmount_whenWithdrawal_ThenThrowIllegal() {
         BigDecimal amount = BigDecimal.TEN;
 
         assertThrows(IllegalArgumentException.class, () -> classUnderTest.makeWithdrawal(amount));

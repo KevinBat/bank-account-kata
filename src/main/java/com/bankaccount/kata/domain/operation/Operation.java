@@ -1,6 +1,5 @@
 package com.bankaccount.kata.domain.operation;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -8,14 +7,14 @@ import java.time.LocalDateTime;
  */
 public class Operation {
 
-    private final Long id;
-    private final Long accountNumber;
-    private final String operationName; // String or enum
-    private final LocalDateTime date;
-    private final BigDecimal amount;
-    private final BigDecimal balance;
+    private Long id;
+    private Long accountNumber;
+    private String operationName; // String or enum
+    private LocalDateTime date;
+    private double amount;
+    private double balance;
 
-    public Operation(Long id, Long accountNumber, String operationName, LocalDateTime date, BigDecimal amount, BigDecimal balance) {
+    public Operation(Long id, Long accountNumber, String operationName, LocalDateTime date, double amount, double balance) {
         this.id = id;
         this.accountNumber = accountNumber;
         this.operationName = operationName;
@@ -40,11 +39,13 @@ public class Operation {
         return date;
     }
 
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public BigDecimal getBalance() {
+    public double getBalance() {
         return balance;
     }
+
+
 }
