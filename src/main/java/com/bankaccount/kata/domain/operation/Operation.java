@@ -9,7 +9,7 @@ public class Operation {
 
     private Long id;
     private Long accountNumber;
-    private String operationName; // String or enum
+    private String operationName;
     private LocalDateTime date;
     private double amount;
     private double balance;
